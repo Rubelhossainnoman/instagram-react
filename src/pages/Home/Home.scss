@@ -252,6 +252,17 @@
 
                                 ul{
                                     li{
+                                        a{
+                                            font-size: 14px;
+                                            font-weight: 500;
+                                            font-family: var(--poppins);
+                                            line-height: 28px;
+                                            cursor: pointer;
+                                            transition: all .3s ease-in-out;
+                                            border-radius: 5px;
+                                            display: block;
+                                            color: var(--primary-color);
+                                        }
                                         font-size: 14px;
                                         font-weight: 500;
                                         font-family: var(--poppins);

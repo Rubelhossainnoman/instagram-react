@@ -27,7 +27,7 @@ const Modal = ({hide}) => {
         if (input.message === "") {
             Swal.fire(
                 'Opps!',
-                'Message and photo fields are required!',
+                'Message fields are required!',
                 'error'
               )
         } else {

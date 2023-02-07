@@ -20,13 +20,8 @@ import Modal from "../../components/Modal/Modal"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Swal from "sweetalert2"
-import EditModal from "../../components/EditModal/EditModal"
 
 const Home = () => {
-    // Edit Modal...
-    const [editModal, setEditModal] = useState({
-        status : false
-    })
     // add new post modal instance
     const [modal,setModal] = useState({
         status : false,
@@ -60,33 +55,6 @@ const Home = () => {
           })
     }
 
-    // Pass single data on edit modal 
-    const [singleData , setSingleData] = useState({
-        message : "",
-        post_photo : "",
-        post_video : "",
-        tag : ""
-    })
-    // Manage edit actions
-    const hendleOnEdit = (id) =>{
-        setEditModal({
-            status : true,
-        })
-        try {
-            axios.get(`http://localhost:5050/posts/${id}`).then(res=>{
-                // console.log(res.data);
-                setSingleData({
-                    message : res.data.message,
-                    post_photo : res.data.post_photo,
-                    post_video : res.data.post_video,
-                    tag : res.data.tag
-                })
-            })
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-
     // Show all post here..
     const [Posts,setPosts] = useState([]);
 
@@ -94,7 +62,7 @@ const Home = () => {
         axios.get('http://localhost:5050/posts?_sort=id&_order=desc').then(res=>{
             setPosts(res.data)
         })
-    },[modal,singleData])
+    },[modal])
 
   return (
     <>
@@ -179,7 +147,7 @@ const Home = () => {
                                         <button><img src={three_dot} alt="" /></button>
                                         <div className="action_menu">
                                             <ul>
-                                                <li onClick={()=>hendleOnEdit(item.id)}>Edit</li>
+                                                <li><Link to={`/edit/${item.id}`}>Edit</Link></li>
                                                 <li onClick={()=>hendleOnDelete(item.id)}>Delete</li>
                                             </ul>
                                         </div>
@@ -437,7 +405,6 @@ const Home = () => {
         </div>
         <div className="all_modal">
             {modal.status && <Modal hide={setModal}/>}
-            {editModal.status && <EditModal message={singleData.message} tag={singleData.tag} post_photo={singleData.post_photo} post_video={singleData.post_video} hide={setEditModal}/>}
         </div>
     </>
   )

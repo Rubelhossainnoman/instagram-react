@@ -1,22 +1,39 @@
-import "./EditModal.scss";
+import "./Edit.scss";
 import { AiOutlineClose } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
-const EditModal = ({ hide, message, post_photo, post_video, tag }) => {
-  console.log(message);
-  // Manage post from database
-  const [input, setInput] = useState({
-    message: message ,
-    slug: "",
-    tag: tag,
-    post_photo: post_photo,
-    post_video: post_video,
-  });
-  useEffect(()=>{
+const Edit = () => {
+    // Navigation
+    const navigate = useNavigate();
+    // Useprams
+    const {id} = useParams();
 
-  },[setInput])
+    // Manage post from database
+    const [input, setInput] = useState({
+        message : '',
+        tag : '',
+        post_photo : '',
+        post_video : ''
+    });
+
+    useEffect(() => {
+        axios
+          .get(`http://localhost:5050/posts/${id}`)
+          .then((res) => {
+                setInput({
+                    message : res.data.message,
+                    tag : res.data.tag,
+                    post_photo : res.data.post_photo,
+                    post_video : res.data.post_video
+                })
+            })
+          .catch((err) => {
+                console.log(err);
+            });
+    }, [id]);
 
   // Manage form on change
   const hendleOnChange = (e) => {
@@ -29,10 +46,10 @@ const EditModal = ({ hide, message, post_photo, post_video, tag }) => {
   const hendleOnSubmit = (e) => {
     e.preventDefault();
     if (input.message === "") {
-      Swal.fire("Opps!", "Message and photo fields are required!", "error");
+      Swal.fire("Opps!", "Message fields are required!", "error");
     } else {
       axios
-        .post("http://localhost:5050/posts", {
+        .patch(`http://localhost:5050/posts/${id}`, {
           ...input,
           slug: input.message.toLowerCase().replace(/ +/g, "-"),
         })
@@ -46,15 +63,20 @@ const EditModal = ({ hide, message, post_photo, post_video, tag }) => {
             post_video: "",
           }));
         });
+        navigate('/')
       Swal.fire("Good Job!", "Data add successfully!", "success");
-      hide(false);
     }
   };
+  //   GO back home page...
+  const hendleGoBack = () => {
+    navigate("/");
+  };
+    
   return (
     <>
       <div className="modal">
         <div className="modal_wrapper">
-          <button onClick={() => hide(false)} className="close_btn">
+          <button onClick={hendleGoBack} className="close_btn">
             <AiOutlineClose />
           </button>
           <div className="modal_content">
@@ -124,4 +146,4 @@ const EditModal = ({ hide, message, post_photo, post_video, tag }) => {
   );
 };
 
-export default EditModal;
+export default Edit;
