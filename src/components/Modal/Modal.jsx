@@ -13,7 +13,6 @@ const Modal = ({hide}) => {
         post_photo : '',
         post_video : ""
     });
-
     // Manage form on change
     const hendleOnChange = (e) =>{
         setInput((prevState)=>({
@@ -31,7 +30,7 @@ const Modal = ({hide}) => {
                 'error'
               )
         } else {
-            axios.post('http://localhost:5050/posts', ({...input, slug : input.message.toLowerCase().replace(/ +/g, '-')})).then(res =>{
+            axios.post('http://localhost:5050/posts', ({...input, post_video : input.post_video.replace('youtu.be', 'www.youtube.com/embed') , slug : input.message.toLowerCase().replace(/ +/g, '-')})).then(res =>{
                 setInput((prevState)=>({
                     ...prevState,
                         message : '',

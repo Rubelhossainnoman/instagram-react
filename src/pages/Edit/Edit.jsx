@@ -81,7 +81,7 @@ const Edit = () => {
           </button>
           <div className="modal_content">
             <div className="modal_header">
-              <h3>Create a new post</h3>
+              <h3>Update Your Info..</h3>
             </div>
             <div className="modal_body">
               <div className="add_new_post_form">
@@ -133,7 +133,7 @@ const Edit = () => {
                   </div>
                   <div className="div">
                     <button className="submit" type="submit">
-                      Submit Post
+                      Update Info
                     </button>
                   </div>
                 </form>

@@ -20,6 +20,8 @@ import Modal from "../../components/Modal/Modal"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Swal from "sweetalert2"
+import { BsArrowRight ,BsArrowLeft} from "react-icons/bs";
+
 
 const Home = () => {
     // add new post modal instance
@@ -55,6 +57,15 @@ const Home = () => {
           })
     }
 
+    // For sidebar
+    const [sidebar, setSidebar] =useState('')
+    const hendleOnWidthDecrease = () =>{
+        setSidebar(`thin`)
+    }
+    const hendleOnWidthIncrease = () =>{
+        setSidebar(``)
+    }
+
     // Show all post here..
     const [Posts,setPosts] = useState([]);
 
@@ -62,34 +73,37 @@ const Home = () => {
         axios.get('http://localhost:5050/posts?_sort=id&_order=desc').then(res=>{
             setPosts(res.data)
         })
-    },[modal])
+    },[modal,sidebar])
+
 
   return (
     <>
         <div className="instagram-copy section">
-            <div className="sidebar">
+            <div className={`sidebar ${sidebar}`}>
                 <div className="sidebar_content">
                     <div className="logo">
                         <Link to="/">
                             <img src={logo_svg} alt="" />
                         </Link>
+                        <div onClick={hendleOnWidthDecrease} className="arrow_left"><BsArrowLeft/></div>
+                        <div onClick={hendleOnWidthIncrease} className="arrow_right"><BsArrowRight/></div>
                     </div>
                     <div className="sidebar_menu">
                         <ul>
-                            <li className="active"><Link to="/"><span><img src={home_svg} alt="" /></span> Home</Link></li>
-                            <li><Link to="/"><span><img src={search_svg} alt="" /></span> Search</Link></li>
-                            <li><Link to="/"><span><img src={explore_svg} alt="" /></span> Explore</Link></li>
-                            <li><Link to="/"><span><img src={reels_svg} alt="" /></span> Reels</Link></li>
-                            <li><Link to="/"><span><img src={messages_svg} alt="" /></span> Messages</Link></li>
-                            <li><Link to="/"><span><img src={notification_svg} alt="" /></span> Notifications</Link></li>
-                            <li onClick={()=> setModal((prevState)=>({...prevState, status : true}))}><Link to="/"><span><img src={create_svg} alt="" /></span> Create</Link></li>
-                            <li><Link to="/"><span><img src={profile_svg} className="profile" alt="" /></span> Profile</Link></li>
-                            <li className="bar"><Link to="/"><span><img src={more_svg} alt="" /></span> More</Link></li>
+                            <li className="active"><Link to="/"><span><img src={home_svg} alt="" /></span> <span>Home</span></Link></li>
+                            <li><Link to="/"><span><img src={search_svg} alt="" /></span> <span>Search</span></Link></li>
+                            <li><Link to="/"><span><img src={explore_svg} alt="" /></span> <span>Explore</span></Link></li>
+                            <li><Link to="/"><span><img src={reels_svg} alt="" /></span> <span>Reels</span></Link></li>
+                            <li><Link to="/"><span><img src={messages_svg} alt="" /></span> <span>Messages</span></Link></li>
+                            <li><Link to="/"><span><img src={notification_svg} alt="" /></span> <span>Notifications</span></Link></li>
+                            <li onClick={()=> setModal((prevState)=>({...prevState, status : true}))}><Link to="/"><span><img src={create_svg} alt="" /></span> <span>Create</span></Link></li>
+                            <li><Link to="/"><span><img src={profile_svg} className="profile" alt="" /></span> <span>Profile</span></Link></li>
+                            <li className="bar"><Link to="/"><span><img src={more_svg} alt="" /></span> <span>More</span></Link></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div className="main_content">
+            <div className={`main_content ${sidebar}`}>
                 <div className="content_info">
                     <div className="posts">
                         <div className="story">
@@ -157,7 +171,7 @@ const Home = () => {
                                     <div className="post_info">
                                         {item.message && <p>{item.message}</p>}
                                         {item.post_photo && <img src={item.post_photo} alt="" />}
-                                        {item.post_video && <iframe width="100%" height="580" src={item.post_video} title="all_video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>}
+                                        {item.post_video && <iframe width="100%" height="450" src={`${item.post_video}`} title="all_video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>}
                                     </div>
                                 </div>
                                 <div className="post_footer">

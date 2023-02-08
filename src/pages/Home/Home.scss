@@ -8,19 +8,65 @@
         top:0;
         left: 0;
         bottom: 0;
+        transition: all .3s ease-in-out;
+
+        &.thin{
+            width: 80px;
+            transition: all .3s ease-in-out;
+        }
+
+        &.thin .sidebar_content .sidebar_menu ul li a span:nth-child(2){
+            display: none;
+        }
+        &.thin .sidebar_content .logo{
+            padding: 16px 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        &.thin .sidebar_content .logo .arrow_left{
+            display: none;
+        }
+        &.thin .sidebar_content .logo .arrow_right{
+            display: block;
+        }
+        &.thin .sidebar_content .logo a img{
+            width: inherit !important;
+            height: inherit!important;
+            transition: all .3s ease-in-out !important;
+        }
         .sidebar_content{
             height: 100dvh;
             position: relative;
             padding-top: 12px;
             .logo{
                 padding: 16px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
                 a{
+                    display: block;
                     img{
                         width: 103px;
                         height: 29px;
+                        transition: all .3s ease-in-out !important;
                         object-fit: cover;
                     }
                 }
+                .arrow_left, .arrow_right{
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background: #ddd;
+                    color: black;
+                    font-size: 15px;
+                    text-align: center;
+                    line-height: 35px;
+                    cursor: pointer;
+                }
+                .arrow_right{display: none;}
             }
             .sidebar_menu{
                 ul{
@@ -78,6 +124,14 @@
         margin-left: 244px;
         padding: 0 241px;
         padding-top: 4px;
+        transition: all .3s ease-in-out;
+
+        &.thin{
+            margin-left: 80px;
+            width: calc(100% - 80px);
+            transition: all .3s ease-in-out;
+            padding: 0 90px;
+        }
 
         .content_info{
             display: flex;
@@ -294,6 +348,9 @@
                             }
                             img{
                                 border-radius: 3px;
+                                width: 100%;
+                                height: 450px;
+                                object-fit: cover;
                             }
                             iframe{
                                 border-radius: 3px;
